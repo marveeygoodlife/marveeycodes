@@ -39,28 +39,28 @@
 /* FONTS */
    @font-face {
     font-family: "Montserrat";
-    src: url(assets/fonts/Montserrat-Light.ttf), format(truetype);
+    src: url(assets/fonts/Montserrat-Light.ttf), format("truetype");
     font-style: normal;
     font-display: swap;
     font-weight: normal;
    }
    @font-face {
     font-family: "Merriweather";
-    src: url(assets/fonts/Merriweather_24pt-ExtraBold.ttf), format(truetype);
+    src: url(assets/fonts/Merriweather_24pt-ExtraBold.ttf), format("truetype");
     font-style: bold;
     font-display: swap;
     font-weight: normal;
    }
    @font-face {
     font-family: "Poppins";
-    src: url(assets/fonts/Poppins-Medium.ttf), format(truetype);
+    src: url(assets/fonts/Poppins-Medium.ttf), format("truetype");
     font-style: normal;
     font-display: swap;
     font-weight: normal;
    }
    @font-face {
     font-family: "Roboto";
-    src: url(assets/fonts/Roboto_Condensed-Medium.ttf), format(truetype);
+    src: url(assets/fonts/Roboto_Condensed-Medium.ttf), format("truetype");
     font-style: normal;
     font-display: swap;
     font-weight: normal;
@@ -74,6 +74,11 @@ body {
     color: var(--text-color);
     scroll-behavior: smooth;
     line-height: var(--line-height);
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
     overflow-x: hidden;
 }
 
@@ -140,7 +145,7 @@ img { display: block;
     }
 figure { 
     margin-block: var(--margin-medium); 
-}
+}/* 
  header svg text {
       font-family: 'Roboto', 'Poppins', sans-serif;
       font-size: 1.2rem;
@@ -148,18 +153,38 @@ figure {
       fill: var(--text-color);
 }
 
+.logo svg, .logo {
+    max-width: 180px;
+    width: auto;
+    height: fit-content;
+    display: block;
+} */
+
 /* ==========================
  HEADER & NAVIGATION
 =============================*/
 
 header { 
-    width: 100%; }
+    width: 100%;
+position: relative;
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 2rem;
+}
+header #logo {
+    width: fit-content;
+    margin-left: 1rem;
+    font-family: 'Merriweather', serif;
+    text-transform: uppercase;
+}
 nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+     display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     padding-inline: var(--padding-medium);
     padding-block: var(--padding-medium);
+  
 }
 
 nav ul {
@@ -196,6 +221,7 @@ nav ul li a:focus {
     border: none;
     cursor: pointer;
     padding: 0;
+    margin-left: auto;
 }
 #togglebtn .bar {
     width: 100%;
@@ -269,7 +295,7 @@ section#work {
     height: auto;
   }
  section#work #workp {
-margin :1rem 0;
+margin:1rem 0;
  max-width: 500px;
 }
 
@@ -383,11 +409,12 @@ p.aboutp {
  CONTACT ME SECTION
 =============================*/
 .contact_content p {
-    margin-block : var(--margin-small);
+    margin-bottom: 1.5rem;;
 }
 form {
     display: grid;
     gap: var(--margin-medium);
+    min-width: 300px;
     max-width: 600px;
     margin-inline: auto;
 }
@@ -419,7 +446,7 @@ footer {
     color: var(--text-color);
 }
 /* ==========================
- ACCESSIBILITY SETTINGS START HERE O
+ ACCESSIBILITY SETTINGS START HERE 
 =============================*/
  /* Focus styles for keyboard users */
 :focus {
@@ -466,12 +493,19 @@ a.removebd {
     position: relative;
     border: none;
     background: transparent;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    width: 45px;
+    height: 45px;
     color: var(--accent);
     text-decoration: none;
     transition: transform var(--transition), background var(--transition), 
     opacity var(--transition);
-    margin-inline: var(--margin-medium);
+    margin-right: 1rem;
+    margin-left: 1rem;
+    margin-block: var(--margin-large);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px;
 }
 a.removebd:hover,
 a.removebd:focus {
@@ -540,15 +574,18 @@ small, p, label, li {
         gap: 1rem;
         position: absolute;
         top: 60px;
-        left: 0;
-        right: 0;
-        background: rgba(15,15,15,0.9);
+        right: -100%;
+        left: auto;
+        width: 100vw;
+        height: 100vh;
+        background: var(--background-color);
         padding-block: var(--padding-medium);
-        transform: translateX(100%);
-        transition: transform var(--transition);
-    }
+        transition: right var(--transition);
+        will-change: right;
+        z-index: 500;
+     }
     nav ul.active { 
-        transform: translateX(0); 
+        right: 0;
     }
     #togglebtn { 
         display: flex; 
@@ -585,5 +622,11 @@ small, p, label, li {
     main, section { max-width: 1200px; }
     form {
         min-width: 500px;
+    }
+    header, nav {
+        height: auto !important;
+    }
+    ul {
+        margin-left: auto;
     }
 }
