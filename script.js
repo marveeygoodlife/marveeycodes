@@ -3,7 +3,143 @@
 document.addEventListener("DOMContentLoaded", function() {
     const ul = document.querySelector('nav ul');
     const ulbtn = document.querySelector('nav button');
+    const ulLinks = document.querySelectorAll("ul a");
+    const nav = document.querySelector('nav')
+    /* close link function */
+    function closeUl() {
+        ul.classList.remove("active");
+        ulbtn.setAttribute('aria-expanded', 'false')
+    }
+    /* show mobile nav menu */
     ulbtn.addEventListener("click", () => {
+        /* set aria attribute for accessibility */
+        let expanded = ulbtn.getAttribute('aria-expanded') === 'true';
+        ulbtn.setAttribute("aria-expanded", !expanded);
         ul.classList.toggle('active');
     });
+    /* close nav on click of links */
+    ulLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            closeUl();
+            const targetId = e.target.getAttribute('href');
+            setTimeout(() => {
+                document.querySelector(targetId).scrollIntoView({ behaviour: "smooth", });
+            }, 100);
+        })
+    })
+    /* close nav link on click of outside ul */
+    document.addEventListener('click', (e) => {
+        const navopen = ul.classList.contains("active");
+        const clickedUl = ul.contains(e.target);
+        const clickedtoggle = ulbtn.contains(e.target);
+        if (navopen && !clickedUl && !clickedtoggle) {
+            closeUl();
+        };
+    });
+    //get scroll to top button
+    const togglebtn = document.getElementById("scrollToTop");
+/* scroll on click of button */
+    togglebtn.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behaviour: "smooth",
+        });
+    });
+/* show scroll to top button */
+    window.addEventListener('scroll', () => {
+        
+            const scrollHeight = window.scrollY;
+            if (scrollHeight > 1500) {
+                togglebtn.classList.add("show");
+            } else {
+                togglebtn.classList.remove("show");
+        };
+    });
+
+    /* ==========================
+       Scroll-reveal & typewriter
+       - reveal: adds a small translate/opacity animation when elements enter viewport
+       - typewriter: types the hero H1 when it becomes visible
+    ========================== */
+    // announcer for a11y (added in index.html)
+    const announcer = document.getElementById('aria-announcer');
+
+    // elements to reveal on scroll;
+    const baseRevealSelector = 'section, .projectcard, .projectcontent, .hero-content,.abouth3, .aboutp, .herop, .skills, footer, header';
+    const baseRevealEls = Array.from(document.querySelectorAll(baseRevealSelector));
+    // reveal only the contact content (not the form wrapper)
+    const contactEls = Array.from(document.querySelectorAll('.contact_content'));
+    //reveal contact section text children
+    const contactChildEls = contactEls.flatMap(c => Array.from(c.children));
+
+    // combine unique elements
+    const allEls = Array.from(new Set([...baseRevealEls, ...contactChildEls]));
+    allEls.forEach(el => el.classList.add('reveal'));
+
+    const revealObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('reveal-visible');
+                // only reveal once
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    allEls.forEach(el => revealObserver.observe(el));
+
+    // type h1 text and add cursor
+    const heroH1 = document.querySelector('#hero .hero-content h1');
+    if (heroH1) {
+        const fullText = heroH1.textContent.trim();
+        // clear existing text and prepare
+        heroH1.textContent = '';
+
+        function typeText(target, text, delay) {
+            return new Promise(resolve => {
+                let i = 0;
+                const timer = setInterval(() => {
+                    if (i < text.length) {
+                        target.textContent += text.charAt(i);
+                        i += 1;
+                    } else {
+                        clearInterval(timer);
+                        resolve();
+                    }
+                }, delay);
+            });
+        }
+
+        function startTypewriter() {
+            // create a caret element and a text node so the caret remains after the typed text
+            const caret = document.createElement('span');
+            caret.className = 'caret';
+            const textNode = document.createTextNode('');
+            // clear and append text node then caret
+            heroH1.textContent = '';
+            heroH1.appendChild(textNode);
+            heroH1.appendChild(caret);
+            heroH1.classList.add('typing');
+            // type into the textNode
+            return typeText(textNode, fullText, 40).then(() => {
+                heroH1.classList.remove('typing');
+                // remove caret after typing completes
+                if (caret && caret.parentNode) caret.parentNode.removeChild(caret);
+                // announce final text for screen readers
+                if (announcer) announcer.textContent = fullText;
+            });
+        }
+
+        const h1Observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startTypewriter();
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        h1Observer.observe(heroH1);
+    }
 });

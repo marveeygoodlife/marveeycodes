@@ -15,10 +15,12 @@
   <link rel="manifest" href="assets/favicon_io/site.webmanifest" />
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="layout.css">
     <title>My portfolio</title>
 </head>
 <body>
     <a href="#hero" class="skip-link">Skip-to-main-content</a>
+    <div id="aria-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
     <header>
          <p id="logo">Marvellous ediagbonya</p>
         <nav>
@@ -27,7 +29,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <button id="togglebtn" type="button" aria-label="navigation menu btn">
+            <button id="togglebtn" type="button" aria-label="navigation menu btn" aria-expanded="false" aria-controls="#ul">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -39,8 +41,8 @@
                 <div class="wrapper">
                 
             <div class="hero-content">
-                <h1>HI, I AM <BR> <span class="name">MARVELLOUS</span> EDIAGBONYA.</h1>
-            <p>
+                <h1>HI, I AM   MARVELLOUS EDIAGBONYA.</h1>
+            <p class='herop'>
                 An Abuja-based front-end developer passionate about building responsive, functional and user-friendly web applications with great user experiences.
             </p>
                 <a href="#contact" class="btn">Contact Me</a>
@@ -69,7 +71,8 @@
             <div class="projectgrid">
                 <div class="projectcard">
                     <figure>
-                        <img src="https://placehold.co/600x400/orange/white" alt="project image">
+                        <img src="#" alt="project image">
+                        <!-- https://placehold.co/600x400/orange/white -->
                     </figure>
                     <div class="projectcontent">
                         <h3>Project Title</h3>
@@ -94,7 +97,7 @@
 
                 <div class="projectcard">
                    <figure>
-                        <img src="https://placehold.co/600x400/orange/white" alt="project image">
+                        <img src="#" alt="project image">
                     </figure>
                     <div class="projectcontent">
                     <h3>Project Title</h3>
@@ -117,7 +120,7 @@
 
                 <div class="projectcard">
                    <figure>
-                        <img src="https://placehold.co/600x400/orange/white" alt="project image">
+                        <img src="#" alt="project image">
                     </figure>
                     <div class="projectcontent">
                     <h3>Project Title</h3>
@@ -153,7 +156,10 @@
     <span class="sr-only">Download my CV</span> 
 </a>
             </div>
-            </div>
+            <figure>
+            <img src="https://placehold.co/900x400/orange/white" alt="my second image" #aboutimg>
+            </figure>
+        </div>
         </section>
         
         <section id="capability">
@@ -215,52 +221,19 @@
         <section id="experience">
             <h2>my experience</h2>
             <div class="wrapper">
-            <div>
-                <h3>Apprentice</h3>
-                <p><strong>PureTech Computer Training School </strong> | February 2024 - June 2024</p>
+        <div aria-live='polite' role="region" aria-label="card carousel">
+                <h3 id="cardtitle">Education</h3>
+                <p id="subtitle"><strong>B.S.C International Relations</strong> | National Open university of Nigeria. | (IN VIEW)</p>
                 <ul>
-                    <li>Assisted customers with document processing, editing, printing, laminating, spiral
-binding, and scanning. </li>
-                    <li>Handled customer service, ensuring smooth communication and assistance. 
+                    <li id="list-one"><strong>Relevant Course Work:</strong>
+Diplomacy, Political Economy, Computer Fundamentals.</li>
+<li id="list-two">Negotiation, Cross-cultural relations.</li>
+<li id="list-three">Conflict Resolution, Power.
 </li>
-                    <li>Applied Microsoft Office tools, including Word, PowerPoint and Excel, for various
-tasks.</li>
-<li>Operated office equipment’s such as scanners, photocopiers, laminators, and
-binding machines etc. to meet customers’ needs. </li>
-                </ul>
-            </div>
-            <div>
-                <h3>Web Development Intern</h3>
-                <p><strong>PureTech Computer Training School</strong> | August 2024 - December 2024</p>
-                <ul>
-                    <li>Acquired Front-End development skills, (HTML, CSS, JavaScript, and
-responsive web design principles). 
-</li>
-                    <li>Built websites from scratch, focusing on creating user-friendly
-interfaces and applying unique styling techniques to enhance user experience.</li>
-                    
-                    <li>Collaborated as part of a front-end developer team on MetaMagnetAi project,
-contributing to the development  of innovative web solutions.</li>
-                </ul>
-            </div>
-            <div>
-                <h3>Education</h3>
-                <p><strong>B.S.C International Relations</strong> | National Open university of Nigeria. | (IN VIEW)</p>
-                <ul>
-                    <li><strong>Relevant Course Work:</strong>
-Diplomacy, Negotiation, Political Economy, Computer Fundamentals, International Law,
-Human Right, Negotiation, Cross-cultural relations, Conflict Resolution, Power,
-International Politics, and Globalization. 
-</li>
-                </ul>
-
-            </div>
-            <div>
-                <h3>Certifications</h3>
-                <ul>
-                    <li>Front-End Web Development Certification - freeCodeCamp (2024)</li>
-                    <li>JavaScript Algorithms and Data Structures - freeCodeCamp (In-VIEW)</li>
-                </ul>
+                 </ul>
+ <div class="buttoncontainer">
+                <button type="button" id="prevbtn" title="previous review" aria-label="previous button"><i class="fas fa-chevron-left"> </i></button>
+                <button type="button" id="nextbtn" aria-label="next button"><i class="fas fa-chevron-right" title="next review"></i></button>
             </div>
             </div>
         </section>
@@ -268,14 +241,14 @@ International Politics, and Globalization.
         <section id="contact">
             <div class="contact_content">
             <h2>Let’s connect</h2>
-            <p class="contactp">Say hello at <a href="mailto:marveey8027@gmail.com">
+            <p class="contactp firstp">Say hello at <a href="mailto:marveey8027@gmail.com" class="underline">
                 marveey8027@gmail.com
             <span class="sr-only">Send me an email.</span> 
             </a>
             </p>
-            <p>
+            <p class="contactp lastp">
                 For more information,
-                <a href="assets/Marvellous_Resumee.pdf" target="_blank" rel="noopener noreferrer">here is my resume.
+                <a href="assets/Marvellous_Resumee.pdf" target="_blank" rel="noopener noreferrer" class="underline">here is my resume.
                 </a>
             </p>
            <div>
@@ -320,7 +293,12 @@ International Politics, and Globalization.
     <footer>
         <p>&copy; 2025  All rights reserved. Marveey goodlife.</p>
     </footer>
+    <button type="button" class="scroll-to-top" id="scrollToTop">
+        <span class="sr-only">Scroll to top buttton</span>
+        &UpArrow;
+    </button>
 <script src="https://kit.fontawesome.com/184a11b74d.js" crossorigin="anonymous" defer></script>
     <script src="script.js"></script>
+    <script src="experience.js"></script>
 </body>
 </html>
