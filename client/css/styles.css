@@ -220,29 +220,29 @@ footer {
     transform: translateY(-2px);
 }
 /* social link */
-a.removebd {
+#hero a.removebd, #contact a.removebd {
     position: relative;
     border: none;
     background: transparent;
     font-size: 1.2rem;
-    width: 35px;
-    height: 35px;
-    color: var(--accent);
+    width: 40px;
+    height: 40px;
+    color: white;
     text-decoration: none;
-    transition: transform var(--transition), background var(--transition), 
+    transition: transform var(--transition), background var(--transition),
     opacity var(--transition);
-    margin-right: 1rem;
-    margin-left: 1rem;
+    margin-inline: var(--margin-small);
     margin-block: var(--margin-large);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    text-align: center;
+    border-radius: unset;
+    background:unset;
     padding: 5px;
 }
 a.removebd:hover,
 a.removebd:focus {
-    background: initial;
+    background: rgba(73, 69, 69, 0.2);
     transform: translateY(-2px);
-    opacity: 0.8;
+    opacity: 0.9;
 }
 a.underline {
     text-decoration:dashed underline;

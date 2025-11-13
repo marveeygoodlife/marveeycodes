@@ -502,3 +502,7 @@ color: #0c5460;
         transition: none !important;
     }
 }
+select option {
+    color: black;
+    border-bottom:  1px solid #ccc;
+}
