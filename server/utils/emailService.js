@@ -9,10 +9,10 @@ class EmailService {
 
     async sendContactEmail(formData)  {
         const mailOptions = {
-            from: formData.email,
+            from: process.env.FROM_EMAIL,
             to: process.env.TO_EMAIL,
             subject: `New Contact: ${this.getSubjectDisplay(formData.subject)}`,
-            html:this.generateEmailTemplate(formData),
+            html: this.generateEmailTemplate(formData),
             replyTo: formData.email
         };
         return await this.transporter.sendMail(mailOptions);

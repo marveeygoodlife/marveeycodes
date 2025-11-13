@@ -5,12 +5,6 @@ exports.validateFormInput = (req, res, next) => {
 
     // Check required fields
     if (!name || !email || !subject || !message) {
-        console.group('inputs')
-        console.log(name)
-        console.log(email)
-        console.log(subject)
-        console.log(message)
-console.groupEnd()
         return res.status(400).json({
             success: false,
             message: 'All fields are required'

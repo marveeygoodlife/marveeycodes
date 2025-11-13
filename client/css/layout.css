@@ -298,8 +298,9 @@ h3.abouth3 {
     margin-bottom: var(--margin-large);
 }
 p.aboutp {
-    margin-block: var(--margin-large)
+    margin-block: var(--margin-large);
 }
+
 #about img {
     border-radius: 50%;
     width: 200px;
