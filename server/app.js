@@ -52,9 +52,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', formRoutes);
 
 //serve client for any other route
-// Use a middleware fallback to serve the client for any non-API route.
-// This avoids passing a wildcard string to path-to-regexp and is the
-// simplest, most compatible fallback across Express/router versions.
 app.use((req, res, next) => {
     // If the request is for an API path, pass through to next handlers
     if (req.path.startsWith('/api')) return next();
