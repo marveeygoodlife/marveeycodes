@@ -390,6 +390,9 @@ p.aboutp {
         display: block;
         border-radius: var(--border-radius);
     }
+    form select {
+    min-height: 37px;
+}
 } 
 /* Tablet */
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -431,6 +434,7 @@ form input, form textarea, form select {
     background: rgba(255,255,255,0.05);
     color: var(--text-color);
 }
+
 label {
     margin-inline: var(--padding-medium);
     display: block;
