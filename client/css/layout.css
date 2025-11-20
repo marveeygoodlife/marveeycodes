@@ -7,7 +7,7 @@ text-align: center;
      font-size: 2.3rem;
     cursor: pointer;
     margin: 0 2rem;
-    color: var(--accent);
+    color: var(--text);
     background: unset;
     transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
@@ -16,9 +16,9 @@ text-align: center;
 #nextbtn:hover,
 #nextbtn:focus {
     opacity: 0.85;
-    color: #ff0080; 
+    color: var(--accent); 
     transform: translateY(-2px);
-    border: 2px solid var(--accent);
+    border: 1px solid var(--accent);
     box-shadow: 0 4px 10px rgba(255,255,255,0.2);
 }
 
@@ -175,7 +175,7 @@ section {
     padding-block: var(--padding-small);
     margin-block: 3rem;
     width: 100%;
-    background: rgba(20, 20, 40, 0.6);
+    background: var(--background-color);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -337,7 +337,7 @@ p.aboutp {
     justify-content: center;
     transition: color 0.2s ease, transform 0.2s ease;
     border-radius: var(--border-radius);
-    border: 1px solid var(--accent);
+    border: 1px solid #ccc;
     width: fit-content;
     padding-inline: var(--padding-medium);
     padding-block: var(--padding-small);
@@ -346,8 +346,7 @@ p.aboutp {
 }
 .skills li:hover, 
 .skills li:focus {
-    color: var(--accent);
-    transform: translateX(3px);
+     transform: translateX(3px);
 }
 
 /* EXPERIENCE */
@@ -390,6 +389,9 @@ p.aboutp {
         display: block;
         border-radius: var(--border-radius);
     }
+    form select {
+    min-height: 37px;
+}
 } 
 /* Tablet */
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -428,9 +430,10 @@ form input, form textarea, form select {
     padding-inline: var(--padding-medium);
     border-radius: 5px;
     border: 1px solid var(--border-color);
-    background: rgba(255,255,255,0.05);
-    color: var(--text-color);
+    background: rgba(84, 79, 79, 0.648);
+     color: var(--text-color);
 }
+
 label {
     margin-inline: var(--padding-medium);
     display: block;
@@ -439,7 +442,7 @@ label {
 }
 /* Form inputs & textarea */
 input:focus, textarea:focus, select:focus {
-    outline: 2px solid var(--accent);
+    outline: 1px solid var(--accent);
     outline-offset: 2px;
     background: rgba(255, 255, 255, 0.1);
     transform: scale(1.02);
@@ -450,6 +453,7 @@ input:focus, textarea:focus, select:focus {
 border: none;
 font-weight: 600;
 cursor: pointer;
+padding: 15px 10px;
 }
 #formBtn:disabled {
     background: #ccc;

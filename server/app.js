@@ -55,6 +55,7 @@ app.use((req, res, next) => {
     // If the request is for an API path, pass through to next handlers
     if (req.path.startsWith('/api')) return next();
     res.sendFile(path.join(__dirname, '../client/index.html'));
+    console.log(__dirname)
 });
 
 // error handling
