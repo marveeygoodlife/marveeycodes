@@ -1,0 +1,329 @@
+/* ==========================
+01 GENERAL STYLE & RESET
+=============================*/
+*, ::before, ::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* COLORS & BACKGROUND */
+    --background-color: #000;
+    --accent: #00ffcc; 
+    --text-color: #c0c0e0;
+    --text: #ffffff;
+    --border-color: #444;
+    --border-radius: 10px;
+    --box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    --box-shadow-hover: 0 4px 10px rgba(0,0,0,0.3);
+    --transition: 0.3s ease-in-out;
+
+    /* GRID & LAYOUT */
+    --layout: grid;
+    --layout-template: repeat(auto-fit, minmax(280px, 1fr));
+
+    /* SIZING */
+    --margin-small: 5px 0;
+    --margin-medium: 10px 0;
+    --margin-large: 20px 0;
+    --margin-xl: 1.2rem 0;
+    --font-size-small: 12px;
+    --font-size-medium: 16px;
+    --font-size-large: 24px;
+    --padding-small: 8px 12px;
+    --padding-medium: 12px ;
+    --padding-large: 15px 24px;
+    --line-height: 1.5;
+}
+
+/* FONTS (served from Google Fonts CDN) */
+
+/* Material Symbols setup
+*/
+:root {
+    --material-fill: 0;     /* 0 = outline, 1 = filled (some families) */
+    --material-wght: 400;   /* weight axis */
+    --material-grad: 0;     /* grade */
+    --material-opsz: 20;    /* optical size */
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-variation-settings: 'FILL' var(--material-fill), 'wght' var(--material-wght), 'GRAD' var(--material-grad), 'opsz' var(--material-opsz);
+    font-feature-settings: "liga" 1; /* enable ligatures (common for symbol fonts) */
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+
+body {
+    font-family: "Montserrat", Arial, sans-serif;
+    background: var(--background-color);
+    color: var(--text);
+    scroll-behavior: smooth;
+    line-height: var(--line-height);
+    overflow-x: hidden;
+    min-height: 100vh;
+    overflow-y: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background-color);
+    z-index: -1;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+     background-size: 400% 400%;
+}
+ 
+/* LINKS */
+a {
+    color: var(--text);
+    text-decoration: none;
+    transition: var(--transition);
+}
+a:hover {
+    text-decoration: underline;
+/*     color: var(--text-color);
+ */}
+
+/* HEADINGS */
+h1, h2, h3, h4 {
+    font-family: "Poppins", sans-serif;
+    margin-block: var(--margin-medium);
+}
+h1 { 
+    font-size: clamp(1.8rem, 3.5vw + 0.5rem, 4rem);
+    text-transform: uppercase; 
+    line-height: 1;
+    margin-bottom: 1rem;
+    background: var(--text);
+    -webkit-background-clip: text;
+    background-clip:text;
+    color: var(--text);
+    text-shadow: 0 0 10px rgba(255, 0, 128, 0.2);
+}
+h2 { 
+    font-size: clamp(1.5rem, 3.5vw + 0.5rem, 2.6rem); 
+    text-align:left;
+  text-transform: uppercase;
+ color: var(--text);
+ margin-inline: var(--margin-medium);
+}
+h3 { 
+    font-size: var(--font-size-medium);
+}
+h4 { 
+    font-size: var(--font-size-small); }
+
+/* IMAGES & FIGURES */
+img { display: block;
+     max-width: 100%; 
+     height: auto;  
+    }
+    
+    img.projectimg {
+     background:   linear-gradient(45deg, #ff0080, #00ffcc);
+     object-fit: cover;
+    }
+figure { 
+    margin-block: var(--margin-medium); 
+}
+
+/* experience */
+
+/* ==========================
+
+CONTACT ME SECTION
+=============================*/
+.contact_content p {
+    margin-bottom: 1.1rem;
+    position: relative;
+    padding-inline: var(--padding-medium);
+}
+
+
+/* ==========================
+ FOOTER SECTION
+=============================*/
+footer {
+    text-align: center;
+    padding-block: var(--padding-large);
+    color: var(--text);
+}
+/* ==========================
+ ACCESSIBILITY SETTINGS START HERE 
+=============================*/
+ /* Focus styles for keyboard users */
+:focus {
+    outline: 2px dashed var(--accent);
+    outline-offset: 4px;
+}
+
+/* =====================
+ Smooth button hover & focus
+======================*/
+.btn {
+    display: inline-block;
+    padding: var(--padding-small);
+/*     background: var(--accent); color: #000;
+ */    
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    position: relative;
+    margin-block:  var(--margin-medium);
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+#navBtn {
+        margin-block:  unset;
+        padding: 1px 3px;
+}
+.btn:hover, 
+.btn:focus {
+    opacity: 0.85;
+    background: var(--accent);
+    color: #000; 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255,255,255,0.2);
+}
+/* Secondary buttons */
+.btn-secondary {
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    color: var(--accent);
+    background: transparent;
+}
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background: var(--accent);
+    color: #000;
+    transform: translateY(-2px);
+}
+/* social link */
+#hero a.removebd, #contact a.removebd {
+    position: relative;
+    border: none;
+    background: transparent;
+    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+    color: var(--text);
+    text-decoration: none;
+    transition: transform var(--transition), background var(--transition),
+    opacity var(--transition);
+    margin-inline: var(--margin-small);
+    margin-block: var(--margin-large);
+    text-align: center;
+    border-radius: unset;
+    background:unset;
+    padding: 5px;
+}
+a.removebd:hover,
+a.removebd:focus {
+    background: rgba(73, 69, 69, 0.2);
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+a.underline {
+     text-decoration:  underline var(--accent);
+ }
+
+a:focus, .btn:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+.fa-brands {
+    color: var(--accent)
+}
+/* Links inside text */
+a:hover, a:focus {
+    color: var(--accent);
+    text-decoration: underline;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+a.roundbd {
+    border: 1px solid #ccc;
+}
+i {
+    margin-inline: var(--margin-small);
+}
+/* =====================
+ Keyboard guidance hints style
+======================*/
+
+/* Skip to main content link*/
+a.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--accent);
+    color: #000;
+    padding: 8px 16px;
+    z-index: 100;
+    transition: top 0.3s ease;
+}
+a.skip-link:focus {
+    top: 0;
+    font-weight: 900;
+    background: var(--accent);
+     color: black;
+}
+/* screen reader style */
+.sr-only {
+      position: absolute !important;
+      height: 1px;
+      width: 1px;
+      overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px);
+      white-space: nowrap;
+      border: 0;
+      padding: 0;
+      margin: -1px;
+    }
+/* =====================
+ Improve contrast for small text
+======================*/
+small, p, label, li {
+    color: var(--text);
+}
+
+.scroll-to-top {
+    position: fixed;
+    right: -100%;
+    bottom: 5rem;
+    background: var(--accent);
+    color: #111;
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    outline: none;
+    border: transparent;
+    font-size: 1.3rem;
+    z-index: 20;
+    opacity: .5;
+    transition: transform .3s ease-in-out;
+}
+.scroll-to-top:hover,
+.scroll-to-top:focus {
+    border: 2px solid #ff0080;
+    opacity: 1;
+    transform: scale(1.05)
+}
+.scroll-to-top.show {
+    right: 5rem;
+}
+hr {
+    height: 1px;
+    color: var(--text-color);
+}
