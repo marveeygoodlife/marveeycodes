@@ -1,116 +1,102 @@
-# Copilot / AI agent quick instructions — friendly-succotash
+# Copilot / AI agent quick instructions — marveeycodes
 
 This repository is a simple static portfolio site. Below are focused, actionable facts an AI coding agent needs to be productive here.
 
-1. Big picture
-   - Single-page static site: `index.html` is the source of truth for structure and content. Styles live in `styles.css`. Behavior lives in `script.js`.
-   - No build step or package manager detected (no `package.json`, no bundler). Changes are deployed by editing files directly and serving the folder as static files.
+## 1. Big picture
+- Single-page static site: `index.html` is the source of truth for structure and content.
+- **No build step or package manager** (no `package.json`, no bundler). Changes are made by editing files directly and serving the folder as static files.
+- The `.vscode/settings.json` sets Live Server to port 5502; use that port when running the VS Code Live Server extension.
 
-2. Key files & folders (use these as anchors for edits)
-   - `index.html` — main markup, contains sections with ids: `#hero`, `#work`, `#about`, `#capability`, `#experience`, `#contact`.
-   - `styles.css` — global variables, `@font-face` rules (fonts under `assets/fonts/`), layout variables `--layout` and `--layout-template`, and responsive media queries. Use this file for visual/theme changes.
-   - `script.js` — small DOM scripts. Example: hamburger toggle — it selects `nav button` and toggles `nav ul` `.active` class to open/close the mobile menu. See lines where `ul.classList.toggle('active')` is used.
-   - `assets/` — fonts (`assets/fonts/`), images (`assets/images/`), favicon and `site.webmanifest` under `assets/favicon_io/`. `assets/Marvellous_Resumee.pdf` is the downloadable CV referenced from the site.
+## 2. Key files & folders
+| File/Folder | Purpose |
+|---|---|
+| `index.html` | Main markup. Sections: `#hero`, `#work`, `#about`, `#capability`, `#experience`, `#contact` |
+| `styles.css` *(root)* | Global reset, CSS variables (`:root`), typography, buttons, accessibility helpers, `hr`, footer |
+| `css/layout.css` | Layout, navigation, scroll-reveal/typewriter animation classes, responsive media queries, form styles |
+| `css/styles.css` | Duplicate of root `styles.css`; keep in sync if editing base styles |
+| `script.js` | Mobile nav toggle, scroll-to-top, IntersectionObserver reveal, typewriter effect for hero `<h1>` |
+| `js/experience.js` | Experience carousel — renders `cards[]` array into `#cardtitle`, `#subtitle`, `#list-one/two/three`; `#prevbtn`/`#nextbtn` and arrow-key navigation |
+| `assets/images/` | SVG tech-stack icons, hero portrait (`.webp`), OG image (`.png`) |
+| `assets/front-end_Resume.pdf` | Downloadable CV — referenced in `#about` and `#contact` sections of `index.html` |
+| `assets/favicon_io/` | Favicons, `site.webmanifest`, apple-touch-icon |
 
-3. Discoverable conventions & patterns
-   - CSS variables used heavily in `:root` (colors, sizing, `--layout` and `--layout-template`) — prefer updating variables for global theme changes rather than changing many selectors.
-   - Responsive navigation: at `max-width: 768px` `nav ul` is off-canvas and the `#togglebtn` button is shown. The JS toggles `nav ul.active` to show/hide the menu.
-   - Accessibility helpers: `.skip-link` and `.sr-only` exist and are used; keep these when changing structure.
-   - Class naming is simple semantic names (e.g., `.projectcard`, `.projectcontent`) — follow existing naming rather than introducing a new BEM or utility naming unless refactoring consistently.
+> **Note:** There is no `assets/fonts/` directory. All fonts are loaded from Google Fonts CDN via `<link>` tags in `<head>`.
 
-4. Workflows / commands (quick local preview)
-   - Easiest: open `index.html` in a browser for quick edits.
-   - Recommended lightweight local server (if you want proper fetch/XHR or relative root behavior):
+## 3. CSS load order (in `index.html`)
+```html
+<link rel="stylesheet" href="css/layout.css">   <!-- layout first -->
+<link rel="stylesheet" href="styles.css">        <!-- then base styles -->
+```
+Layout rules in `css/layout.css` are intentionally loaded first; `styles.css` provides global resets and variables that cascade into it.
 
-```powershell
-# Python (works if python is installed)
+## 4. External dependencies (CDN — no local copies)
+| Dependency | How included |
+|---|---|
+| Google Fonts (Montserrat, Poppins, Merriweather, Roboto Condensed) | `<link>` in `<head>` from `fonts.googleapis.com` |
+| Google Material Symbols Outlined | `<link>` in `<head>` from `fonts.googleapis.com` |
+| Font Awesome 6 (brands only) | `<link>` from `cdnjs.cloudflare.com` — only `.fa-brands` icons are available |
+
+> **Important:** Font Awesome is loaded as a **CSS stylesheet** (brands-only), not a JavaScript kit. Only brand icons (`fa-brands fa-*`) work. Standard solid/regular icons will not render.
+
+## 5. CSS variables (in `:root` — change here for global theme updates)
+```css
+--background-color: #000;
+--accent: #00ffcc;      /* teal — used for focus rings, hover states, scroll-to-top */
+--text-color: #c0c0e0;
+--text: #ffffff;
+--layout: grid;
+--layout-template: repeat(auto-fit, minmax(280px, 1fr));
+```
+
+## 6. Key JS patterns
+- **Mobile nav** (`script.js`): `document.querySelector('nav button')` (`#togglebtn`) toggles `nav ul.active`. The hamburger is hidden on desktop via `css/layout.css`; shown via `display: flex` inside `@media (max-width: 768px)`.
+- **Scroll reveal**: `script.js` adds `.reveal` to a wide selector list, then `IntersectionObserver` adds `.reveal-visible` (styles in `css/layout.css`).
+- **Typewriter**: `script.js` — `#hero .hero-content h1` text is cleared on load, re-typed character-by-character via `setInterval`, with a `.caret` `<span>` appended during typing.
+- **Experience carousel** (`js/experience.js`): mutates `innerHTML`/`textContent` of fixed DOM ids (`#cardtitle`, `#subtitle`, `#list-one`, `#list-two`, `#list-three`). To add/edit experience entries, modify the `cards[]` array in `js/experience.js`. Arrow keys (`←`/`→`) and `Home`/`End` also navigate cards.
+
+## 7. Accessibility conventions — do not remove these
+- `.sr-only` — visually hidden text for screen readers (CSS in `styles.css`)
+- `.skip-link` — "Skip to main content" anchor that shows on `:focus` (CSS in `styles.css`)
+- `aria-live="polite"` on `#aria-announcer` — used to announce the typed hero text
+- `aria-expanded` on `#togglebtn` — kept in sync by `script.js`
+- All decorative icon `<i>` tags have `aria-hidden="true"` with adjacent `.sr-only` spans
+
+## 8. Local preview
+```sh
+# Python (simplest)
 python -m http.server 8000
 
-# Node (optional, if node is installed)
+# Node
 npx serve . -l 5000
 ```
+Or use the VS Code Live Server extension (port 5502 per `.vscode/settings.json`).
 
-5. Debugging hints
-   - JavaScript is plain ES; check `script.js` for DOM selectors. No bundling, so changes are loaded on page reload or via Live Server extension.
-   - No tests present in the repo — treat changes as manual/visual verification.
+No tests exist — changes are verified by manual/visual inspection.
 
-6. Integration & external deps
-   - Font files are local under `assets/fonts/` and declared in `styles.css` via `@font-face`. Update sources there when replacing fonts.
-   - Font Awesome is included via the external kit script tag in `index.html` (deferred). Expect icons to rely on that external script.
-   - Contact form has `action="#"` — there's no backend handler in this repo. Do not assume form submissions will work without adding a server or external form service.
+## 9. Common edits and where to make them
+| Task | Where |
+|---|---|
+| Change accent color / theme | `styles.css` `:root { --accent: ... }` |
+| Update project cards | `index.html` — `.projectcard` divs in `#work` section |
+| Update experience entries | `js/experience.js` — `cards[]` array |
+| Update CV download link | `index.html` `href="assets/front-end_Resume.pdf"` (two places: `#about` and `#contact`) and replace the PDF file in `assets/` |
+| Add/change skills icons | `index.html` — `<ul class="skills">`, add SVG to `assets/images/` |
+| Adjust responsive breakpoints | `css/layout.css` — `@media` blocks |
+| Change navigation links | `index.html` `<nav><ul>` |
 
-7. Small examples to reference when making changes
-   - Mobile nav toggle: `script.js` — look for `document.querySelector('nav button')` and `ul.classList.toggle('active')`.
-   - Theme variables: `styles.css` `:root { --accent: #FFD700; ... }` — change these for color/theme updates.
-   - Downloadable CV: `assets/Marvellous_Resumee.pdf` referenced in `index.html` — update file name and link together.
+## 10. Deployment
+- **GitHub Pages**: push to `main` and enable Pages (Settings → Pages → Source: `main` / root). No build step needed.
+- **Render**: the `README.md` documents a `client/` + Express backend setup for a prior version of this site. The current repo is purely static; ignore those Render/Express/Mailgun instructions for the static site.
 
-8. Agents: safety / edit guidance
-   - Keep accessibility helpers and focus styles intact (`.sr-only`, `.skip-link`, `:focus` styles).
-   - When refactoring large sections, do small commits and include a short PR description that explains visual changes; there are no automated tests to validate visuals.
+## 11. Commit message style
+Follow Conventional Commits for consistency:
+- `feat:` new feature or content
+- `fix:` bug fix
+- `chore:` maintenance (assets, deps)
+- `docs:` documentation only
+- `style:` CSS/visual changes with no logic change
 
-If any part of the site depends on an external service you expect me to modify (hosting, form backend, analytics), tell me the intended provider and credentials/workflow; otherwise I will keep to static-site edits only. Ready to iterate — tell me which area you want improved first (styling, nav behavior, content updates, or add a simple static server script). 
-
-9. Deployment, CI & quick commands
-
-- GitHub Pages (quick choices):
-   - Option A — simplest: push to `main` (root) and enable Pages in the repository Settings → Pages → Source: `main` / `root`. No build step required for this repo — changes appear after GitHub Pages publishes.
-   - Option B — use a separate `gh-pages` branch (keeps source and published site separate). Example PowerShell commands to publish current HEAD to `gh-pages`:
-
-```powershell
-# Force-push current commit to gh-pages branch
-git add -A
-git commit -m "chore: publish site"
-git push origin HEAD:gh-pages --force
-```
-
-- Recommended for automated deploys: create a GitHub Actions workflow that builds (if you add a build step later) and publishes to Pages. A minimal pattern uses `peaceiris/actions-gh-pages` or `JamesIves/github-pages-deploy-action`. Example (summary only):
-
-   - Checkout, (optional) install/build, then use an action to publish the contents of the repo (or a `dist/` folder) to `gh-pages` or the Pages target.
-
-- Local sanity checks (quick):
-   - Open `index.html` directly in a browser for quick visual checks.
-   - Run a lightweight local server to reproduce relative-path behavior:
-
-```powershell
-python -m http.server 8000
-# or if you have node
-npx serve . -l 5000
-```
-
-10. CI / validation suggestions (discoverable, optional)
-
-- This repo currently has no automated tests. Useful lightweight CI checks to add later:
-   - Validate HTML/CSS (an `html-validate` or `vnu-jar` step) to prevent markup regressions.
-   - Run a simple link-checker against the generated site before deploying.
-
-- If you want, I can add a starter GitHub Actions workflow that:
-   1. Checks out the repo
-   2. (Optional) Runs any build step you add later
-   3. Runs an HTML validation step
-   4. Deploys to GitHub Pages (via action) — tell me which action you prefer and I will create the workflow file.
-
-11. PR template & commit message style
-
-- Recommended commit message style: follow a small, consistent convention inspired by Conventional Commits. Use one-line messages for small changes, e.g.:
-   - feat: add project card component
-   - fix: correct mobile nav toggle behavior
-   - chore: update fonts
-   - docs: update CV download link
-
-- Short PR template to include in `.github/PULL_REQUEST_TEMPLATE.md` (suggestion):
-
-   Title: short descriptive title
-
-   Body:
-   - What changed? (one-paragraph summary)
-   - Why: why is the change needed?
-   - How to review / Test steps:
-      1. Open `index.html` or run local server
-      2. Verify UI/UX expectations (list key screens)
-
-   Checklist:
-   - [ ] Preview locally
-   - [ ] Accessibility keyboard checks (tab order, skip-link)
-   - [ ] Images and assets checked (local `assets/` paths)
-
-If you'd like I can add the `PULL_REQUEST_TEMPLATE.md` file and/or a `.github/workflows/deploy.yml` sample to automate Pages deploys — tell me which one to create and I will add it.
+## 12. Known quirks / errors encountered
+- `css/styles.css` is a copy of the root `styles.css`. Both are present; `index.html` loads only root `styles.css`. Keep them in sync or consolidate if refactoring.
+- `README.md` describes a `client/` + Express backend that no longer exists in this repo. Disregard those instructions when working on the static site.
+- The `#about` section has an empty `<figure>` (no `<img>`); this is intentional placeholder markup.
